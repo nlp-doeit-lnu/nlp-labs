@@ -1,0 +1,76 @@
+\documentclass[a4paper, 14pt]{article}
+\usepackage[utf8]{inputenc}
+\usepackage[T2A]{fontenc}
+\usepackage[english, ukrainian]{babel}
+\usepackage{graphicx}
+\usepackage{amsmath}
+\usepackage{minted}                        
+
+%%%% впишіть в поле нижче назву лабораторної роботи
+\title{Назва лабораторної роботи}
+%%%% впишіть в поле нижче своє ім'я та прізвище
+\author{Ім'я Прізвище}
+\date{September 2022}
+
+\makeatletter
+	\let\insertauthor\@author
+\makeatother
+
+\makeatletter
+	\let\inserttitle\@title
+\makeatother
+
+\begin{document}
+
+\begin{titlepage}
+   \centerline{\small{Львівський національний університет імені Івана Франка}}
+   \centerline{\small{Факультет електроніки та комп'ютерних технологій}}
+   \centerline{\small{Кафедра оптоелектроніки та інформаційних технологій}}
+   \vskip70mm
+   %%%%%%%%%%% Підставити порядковий номер лабораторної %%%%%%%%%%%%%%%%%%%
+   \centerline{\textbf{\Large{ЛАБОРАТОРНА РОБОТА №~$n$}}}
+   \vskip20mm
+   \centerline{\Large{\inserttitle}}
+   \vskip20mm
+   \hfill
+   \begin{minipage}{0.3\textwidth}
+       Виконав/ла: \\
+       студент/ка групи \\
+       ПІБ
+   \end{minipage}
+   \vskip10mm
+   \hfill
+   \begin{minipage}{0.3\textwidth}
+       Перевірив: \\
+       асист.~Горон~Б.
+   \end{minipage}
+   \vfill
+   \centerline{Львів--2024}
+\end{titlepage}
+
+
+\section*{Теорія}
+%%%%%%%% Підставити сюди текст теорії, за потреби вписувати рівняння за допомогою середовища equation %%%%%%%%%%%%%%%%%%%%%
+
+\begin{equation}
+	f \approx \frac{1}{r^{\alpha}}
+\end{equation}
+
+\section*{Результати}
+%%%%%%%% вставити сюди рисунки (в окремі середовища figure) і супровідний текст %%%%%%%%%%%%%
+
+\begin{figure}[!htbp]
+	\centering
+	\includegraphics[width=\textwidth]{/path/to/image.png}
+	\caption{Підпис до рисунка}
+	\label{fig:enter-label}
+\end{figure}
+
+\section*{Висновки}
+%%%%%%%%% Підставити сюди текст висновків %%%%%%%%%%%%%%%%%%%%
+
+\appendix
+
+\section*{Лістинґи}
+
+\end{document}
