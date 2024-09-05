@@ -1,0 +1,34 @@
+#!/usr/bin/bash
+
+NLP_HOME="%NLP_HOME%"
+NLP_WINE="$NLP_HOME/images/wine"
+
+NLP_DATA="%NLP_DATA%"
+NLP_RESULTS="%NLP_RESULTS%"
+
+LOCAL_BINS="$NLP_HOME/programs/binaries"
+LOCAL_SCRIPTS="$NLP_HOME/scripts"
+
+MOUNT_POINT="/mnt"
+CONT_BINS="$MOUNT_POINT/binaries"
+CONT_DATA="$MOUNT_POINT/data"
+CONT_SCRIPTS="$MOUNT_POINT/scripts"
+CONT_RESULTS="$MOUNT_POINT/results"
+
+
+if [ -z "$1" ]
+then
+	echo "не введено назву програми"
+else
+
+	SCRIPT=$1
+
+	$NLP_WINE/docker-wine --cache \
+		--local \
+		--as-root \
+		--volume="$LOCAL_BINS:$CONT_BINS" \
+		--volume="$LOCAL_SCRIPTS:$CONT_SCRIPTS" \
+		--volume="$NLP_DATA:$CONT_DATA" \
+		--volume="$NLP_RESULTS:$CONT_RESULTS" \
+		$CONT_SCRIPTS/$SCRIPT.sh
+fi
