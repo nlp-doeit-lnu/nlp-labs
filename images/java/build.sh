@@ -11,7 +11,7 @@ then
 	docker build -t $IMAGE $NLP_JAVA
 fi
 
-if [ -z "$(which xhost)" ]
+if ! command -v xhost &> /dev/null
 then
 	echo "потрібно встановити xhost"
 	sudo apt update
