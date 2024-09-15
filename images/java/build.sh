@@ -11,6 +11,13 @@ then
 	docker build -t $IMAGE $NLP_JAVA
 fi
 
+if [ -z "$(which xhost)" ]
+then
+	echo "потрібно встановити xhost"
+	sudo apt update
+	sudo apt install
+fi
+
 read -p "Введіть шлях до папки з даними: " NLP_DATA
 
 read -p "Введіть шлях до папки, в яку ви хотіли б зберігати дані: " NLP_RESULTS
