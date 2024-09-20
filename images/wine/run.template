@@ -28,7 +28,7 @@ else
 		--as-root \
 		--volume="$LOCAL_BINS:$CONT_BINS" \
 		--volume="$LOCAL_SCRIPTS:$CONT_SCRIPTS" \
-		--volume="$NLP_DATA:$CONT_DATA" \
+		--volume="$NLP_DATA:$CONT_DATA:ro" \
 		--volume="$NLP_RESULTS:$CONT_RESULTS" \
 		$CONT_SCRIPTS/$SCRIPT.sh
 fi
