@@ -1,6 +1,5 @@
 #!/bin/bash
 
-xhost +local:root
 
 NLP_HOME="%NLP_HOME%"
 
@@ -31,6 +30,14 @@ then
 else
 	SCRIPT=$1
 
+	if [[ "$OSTYPE" == "Darwin" ]]
+	then
+		echo "starting XQuartz"
+		open -a XQuartz
+	fi
+	
+	xhost +local:root
+
 	docker run --rm -p $WEB_PORT \
 		-p $RDP_PORT \
 		-v $LOCAL_JARS:$CONT_JARS \
@@ -40,6 +47,7 @@ else
 		-v $LOCAL_X11_PATH:$CONT_X11_PATH \
 		-e DISPLAY=%DISPLAY% \
 		$DOCKER_IMAGE $CONT_SCRIPTS/$SCRIPT.sh
+
+	xhost -local:root
 fi
 
-xhost -local:root
