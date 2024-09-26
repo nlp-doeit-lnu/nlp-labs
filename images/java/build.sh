@@ -1,8 +1,58 @@
 #!/bin/bash
 
+function check_host_os () {
+
+	case "$(uname -s)" in
+		"Linux")
+			HOST_OS="Linux" ;;
+
+		"Darwin")
+			HOST_OS="macOS" ;;
+
+	esac
+
+}
+
+function check_docker_is_active () {
+
+	case $HOST_OS in
+		"Linux")
+			linux_check_docker ;;
+
+		"macOS")
+			macos_check_docker ;;
+
+	esac
+	
+}
+
+function linux_check_docker () {
+
+	if ! [[ "$(systemctl is-active docker)" == active ]]
+	then
+		echo "docker daemon is not active."
+		echo "we will try to start it automatically."
+		echo "or you can do it manually, e.g. using command \" sudo systemctl start docker\"."
+
+		sudo systemctl start docker
+
+	fi
+
+}
+
+function macos_check_docker () {
+
+	if (! docker-stats --no-stream )
+	then
+		echo "we need to launch Docker."
+		open -a Docker
+	fi
+
+}
+
 function check_display_var () {
 	echo "check DISPLAY variable on host computer."
-	case "$(uname -s)" in
+	case $HOST_OS in
 		"Linux")
 			DISPLAY_HOST="\$DISPLAY" ;;
 
@@ -49,7 +99,7 @@ function install_xquartz() {
 	# Default is No
 	[ -z "${answer}" ] && answer="n"
 
-	case "${answer}" in
+	case $answer in
 		[Yy]|[Yy][Ee][Ss])
 			brew install --cask xquartz	
 			;;
@@ -79,7 +129,7 @@ function install_xhost () {
 	local answer
 	read -r -p "install xhost automatically using your package manager? [y - yes | n - no]"
 
-	[ -z "$(answer)" ] && answer="n"
+	[ -z "$answer" ] && answer="n"
 
 	case "${answer}" in
 		[Yy]|[Yy][Ee][Ss])
@@ -116,6 +166,8 @@ NLP_HOME=$PWD
 NLP_JAVA=$NLP_HOME/images/java
 IMAGE=nlp-java
 
+check_host_os
+check_docker_is_active
 build_image
 check xquartz
 check_xhost

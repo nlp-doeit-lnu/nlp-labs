@@ -1,6 +1,5 @@
 #!/bin/bash
 
-
 NLP_HOME="%NLP_HOME%"
 
 NLP_DATA="%NLP_DATA%"
@@ -38,9 +37,7 @@ else
 	
 	xhost +local:root
 
-	docker run --rm -p $WEB_PORT \
-		-p $RDP_PORT \
-		-v $LOCAL_JARS:$CONT_JARS \
+	docker run --rm -v $LOCAL_JARS:$CONT_JARS \
 		-v $LOCAL_SCRIPTS:$CONT_SCRIPTS \
 		-v $NLP_DATA:$CONT_DATA:ro \
 		-v $NLP_RESULTS:$CONT_RESULTS \
@@ -50,4 +47,3 @@ else
 
 	xhost -local:root
 fi
-
