@@ -6,7 +6,7 @@ name: nlp-java container publish
 # documentation.
 
 on:
-  workflow_call
+  workflow_dispatch
 #  push:
 #    branches: [ "main" ]
 
@@ -14,7 +14,7 @@ env:
   # Use docker.io for Docker Hub if empty
   REGISTRY: ghcr.io
   # github.repository as <account>/<repo>
-  IMAGE_NAME: nlp-java
+  IMAGE_NAME: nlp-doit-lnu/nlp-java
 
 
 jobs:
