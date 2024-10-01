@@ -79,6 +79,8 @@ function build_image () {
 }
 
 function check_xquartz () {
+
+	echo "Your system is $(uname -s)"
 	if [[ "$(uname -s)" = "Darwin" ]] && ! [ -f /opt/X11/bin/xquartz ]
 	then
 		echo "xquartz is not found, but it is necessary for X11 forwarding."
@@ -115,6 +117,8 @@ function install_xquartz() {
 
 # перевіряємо чи існує команда xhost
 function check_xhost () {
+
+	echo "checking xhost command ..."
 	if ! [ -x "$(command -v xhost)" ]
 	then
 		echo "command xhost doesn't exist on your system."
@@ -162,6 +166,25 @@ function install_xhost () {
 	esac
 }
 
+# doesn't work properly yet, just an idea from docker-wine
+function add_x11_key () {
+
+    # Check for .Xauthority which is required for authenticating as the current user on the host's X11 server
+    if [ -z "${XAUTHORITY}" ]; then
+        echo "ERROR: No valid .Xauthority file found for X11"
+        exit 1
+    fi
+
+    # Get the hex key for the display from host user's .Xauthority file and store in ~/.docker-wine.Xkey
+    xauth list | head -n1 | awk '{print $3}' > ~/.nlp-docker.Xkey
+
+    # Lock down permissions
+    chmod 600 ~/.nlp-docker.Xkey
+
+    XKEY="$HOME/nlp-docker.Xkey:/root/.Xkey:ro"
+
+}
+
 NLP_HOME=$PWD
 NLP_JAVA=$NLP_HOME/images/java
 IMAGE=nlp-java
@@ -169,7 +192,8 @@ IMAGE=nlp-java
 check_host_os
 check_docker_is_active
 build_image
-check xquartz
+check_xquartz
+add_x11_key
 check_xhost
 check_display_var
 
@@ -183,6 +207,7 @@ sed -e "s@%NLP_HOME%@$NLP_HOME@g" \
     -e "s@%NLP_DATA%@$NLP_DATA@g" \
     -e "s@%NLP_RESULTS%@$NLP_RESULTS@g" \
     -e "s@%DISPLAY%@$DISPLAY_HOST@g" \
+    -e "s@%XKEY%@$XKEY@g" \
     $NLP_JAVA/run.template > $NLP_JAVA/run.sh
 
 chmod u+x $NLP_JAVA/run.sh
