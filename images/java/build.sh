@@ -65,13 +65,13 @@ function check_display_var () {
 function build_image () {
 
 	echo "check if nlp-java:latest exists"
-	if [ -z "$(docker images | grep $IMAGE)" ];
+	if [ -z "$(docker images | grep $IMAGE:$TAG)" ];
 	then
 		echo "it doesn't exits."
 		echo "run docker build."
 		
-		docker build -t $IMAGE $NLP_JAVA
-		
+		docker build -t $IMAGE:$TAG $NLP_JAVA
+
 		echo "nlp-java:latest created."
 	else
 		echo "image nlp-java:latest already exists."
@@ -188,6 +188,7 @@ function add_x11_key () {
 NLP_HOME=$PWD
 NLP_JAVA=$NLP_HOME/images/java
 IMAGE=nlp-java
+TAG=dev
 
 check_host_os
 check_docker_is_active

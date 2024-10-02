@@ -1,12 +1,15 @@
-FROM jlesage/baseimage-gui:ubuntu-20.04
+#FROM jlesage/baseimage-gui:ubuntu-20.04
+
+ARG BASE=ubuntu
+ARG TAG=latest
+
+FROM $BASE:$TAG
 
 # installation of preliminary libraries
 RUN apt update \
     && apt install -y curl \ 
      libgtk2.0-0 \
-     gosu \
-     unzip \
-     xdg-utils
+     unzip
 
 # JRE-18 and JavaFX installation from OpenJDK
 RUN curl -O https://download.java.net/java/GA/jdk18/43f95e8614114aeaa8e8a5fcf20a682d/36/GPL/openjdk-18_linux-x64_bin.tar.gz \
