@@ -65,7 +65,7 @@ function check_display_var () {
 function build_image () {
 
 	echo "check if nlp-java:latest exists"
-	if [ -z "$(docker images | grep $IMAGE:$TAG)" ];
+	if [ -z "$(docker images -q $IMAGE:$TAG 2> /dev/null)" ];
 	then
 		echo "it doesn't exits."
 		echo "run docker build."

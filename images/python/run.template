@@ -1,0 +1,51 @@
+#!/bin/bash
+
+NLP_HOME="%NLP_HOME%"
+
+NLP_DATA="%NLP_DATA%"
+NLP_RESULTS="%NLP_RESULTS%"
+
+LOCAL_PYS="$NLP_HOME/programs/python"
+LOCAL_SCRIPTS="$NLP_HOME/scripts"
+
+MOUNT_POINT="/mnt"
+CONT_PYS="$MOUNT_POINT/python"
+CONT_DATA="$MOUNT_POINT/data"
+CONT_SCRIPTS="$MOUNT_POINT/scripts"
+CONT_RESULTS="$MOUNT_POINT/results"
+
+LOCAL_X11_PATH="/tmp/.X11-unix"
+CONT_X11_PATH="/tmp/.X11-unix"
+
+XKEY_BIND="%XKEY%"
+
+VIDEOCARD="/dev/dri"
+
+DOCKER_IMAGE="nlp-python"
+TAG="%TAG%"
+
+if [ -z "$1" ]
+then
+	echo "не введено назву програми"
+else
+	SCRIPT=$1
+
+	if [[ "$OSTYPE" == "Darwin" ]]
+	then
+		echo "starting XQuartz"
+		open -a XQuartz
+	fi
+	
+	# xhost +local:root
+
+	docker run --rm -v $LOCAL_PYS:$CONT_PYS \
+		-v $LOCAL_SCRIPTS:$CONT_SCRIPTS \
+		-v $NLP_DATA:$CONT_DATA:ro \
+		-v $NLP_RESULTS:$CONT_RESULTS \
+		-v $LOCAL_X11_PATH:$CONT_X11_PATH \
+		-v $XKEY_BIND \
+		-e DISPLAY=%DISPLAY% \
+		$DOCKER_IMAGE:$TAG $CONT_SCRIPTS/$SCRIPT.sh
+
+	# xhost -local:root
+fi
