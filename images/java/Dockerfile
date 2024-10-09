@@ -1,7 +1,7 @@
 #FROM jlesage/baseimage-gui:ubuntu-20.04
 
 ARG BASE=ubuntu
-ARG TAG=latest
+ARG TAG=20.04
 
 FROM $BASE:$TAG
 
@@ -9,6 +9,7 @@ FROM $BASE:$TAG
 RUN apt update \
     && apt install -y curl \ 
      libgtk2.0-0 \
+     libxtst6 \
      unzip
 
 # JRE-18 and JavaFX installation from OpenJDK

@@ -23,7 +23,8 @@ VIDEOCARD="/dev/dri"
 WEB_PORT="5800:5800"
 RDP_PORT="5900:5900"
 
-DOCKER_IMAGE="nlp-java:latest"
+DOCKER_IMAGE="nlp-java"
+TAG="%TAG%"
 
 if [ -z "$1" ]
 then
@@ -37,7 +38,7 @@ else
 		open -a XQuartz
 	fi
 	
-	xhost +local:root
+	# xhost +local:root
 
 	docker run --rm -v $LOCAL_JARS:$CONT_JARS \
 		-v $LOCAL_SCRIPTS:$CONT_SCRIPTS \
@@ -46,7 +47,7 @@ else
 		-v $LOCAL_X11_PATH:$CONT_X11_PATH \
 		-v $XKEY_BIND \
 		-e DISPLAY=%DISPLAY% \
-		$DOCKER_IMAGE $CONT_SCRIPTS/$SCRIPT.sh
+		$DOCKER_IMAGE:$TAG $CONT_SCRIPTS/$SCRIPT.sh
 
-	xhost -local:root
+	# xhost -local:root
 fi

@@ -188,7 +188,7 @@ function add_x11_key () {
 NLP_HOME=$PWD
 NLP_JAVA=$NLP_HOME/images/java
 IMAGE=nlp-java
-TAG=dev
+TAG=latest
 
 check_host_os
 check_docker_is_active
@@ -209,6 +209,7 @@ sed -e "s@%NLP_HOME%@$NLP_HOME@g" \
     -e "s@%NLP_RESULTS%@$NLP_RESULTS@g" \
     -e "s@%DISPLAY%@$DISPLAY_HOST@g" \
     -e "s@%XKEY%@$XKEY@g" \
+    -e "s@%TAG%@$TAG@g" \
     $NLP_JAVA/run.template > $NLP_JAVA/run.sh
 
 chmod u+x $NLP_JAVA/run.sh
