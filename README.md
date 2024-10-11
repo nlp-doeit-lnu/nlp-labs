@@ -93,6 +93,10 @@ docker load -i <path to image tar file>
 ```
 ./images/java/run.sh repetition_parameter
 ```
+або
+```
+./images/python/run.sh FAR
+```
 
 7. Збережіть результати розрахунків у папку `/mnt/results/`, або будь-яку іншу, яку ви примонтували до контейнера ззовні, користуючись графічним інтерфейсом програми, якою ви користуєтесь (усі програми дозволяють вручну вибрати потрібний шлях).
 
@@ -100,6 +104,8 @@ docker load -i <path to image tar file>
 
 ## Виправлення проблем
 
-- **робота з `xhost`**: якщо ви зіткнулися з помилкою на зразок: `xhost: authorization required, but no authorization protocol specified`:
+- якщо ви зіткнулися з помилкою на зразок: `xhost: authorization required, but no authorization protocol specified`:
     - якщо у вас macOS, то спершу перевірте, чи у вас дозволені підключення від мережевих клієнтів у налаштуваннях XQuartz: перейдіть у вкладку `Security` і подивіться, чи у вас ввімкнене налаштування `Allow connections from network clients`;
     - у відповідному `run`-скрипті змініть рядки `xhost +local:root` та `xhost -local:root` на `xhost +127.0.0.1` та `xhost -127.0.0.1` відповідно.
+
+- перед викликом скрипту `2part_splitter.sh` (для `nlp-python`) виконайте команду `xhost+`, а після завершення роботи з ним --- команду `xhost-`.
