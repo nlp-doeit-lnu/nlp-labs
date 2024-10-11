@@ -6,12 +6,14 @@ ARG TAG=20.04
 FROM $BASE:$TAG
 
 # ENV PYTHONDONTWRITEBYTECODE=1
+ENV DEBIAN_FRONTEND=noninteractive
 
 # installation of preliminary libraries
-RUN apt update \
-    && apt install -y curl \
+RUN apt update\
+    && apt install -y --no-install-recommends curl \
     pip \
-    python3 
+    python3 \
+    python3-tk
 
 RUN pip install --no-compile --no-cache-dir dash \
     dash_bootstrap_components \
@@ -27,7 +29,6 @@ RUN pip install --no-compile --no-cache-dir dash \
     plotly \
     regex \
     scikit-learn \
-    scipy \
-    tk
+    scipy 
 
 EXPOSE 8050
