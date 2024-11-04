@@ -115,3 +115,5 @@ docker load -i <path to image tar file>
     - у відповідному `run`-скрипті змініть рядки `xhost +local:root` та `xhost -local:root` на `xhost +127.0.0.1` та `xhost -127.0.0.1` відповідно.
 
 - перед викликом скрипту `2part_splitter.sh` (для `nlp-python`) виконайте команду `xhost+`, а після завершення роботи з ним --- команду `xhost-`.
+
+- для запуску скрипт `rt_polya.sh` потрібно скористатися командою: `./images/python/run.sh rt_polya interactive`.

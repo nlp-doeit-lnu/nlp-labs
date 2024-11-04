@@ -1,4 +1,5 @@
 #!/usr/bin/bash
 
-python3 /mnt/python/new.py
+cd /mnt/python
+python3 new.py
 

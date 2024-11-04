@@ -37,15 +37,27 @@ else
 	fi
 	
 	# xhost +local:root
-
-	docker run --rm -v $LOCAL_PYS:$CONT_PYS \
-		-v $LOCAL_SCRIPTS:$CONT_SCRIPTS \
-		-v $NLP_DATA:$CONT_DATA:ro \
-		-v $NLP_RESULTS:$CONT_RESULTS \
-		-v $LOCAL_X11_PATH:$CONT_X11_PATH \
-		-v $XKEY_BIND \
-		-e DISPLAY=%DISPLAY% \
-		$DOCKER_IMAGE:$TAG $CONT_SCRIPTS/$SCRIPT.sh
+	
+	if [ -z "$2" ]
+	then
+		docker run --rm -v $LOCAL_PYS:$CONT_PYS \
+			-v $LOCAL_SCRIPTS:$CONT_SCRIPTS \
+			-v $NLP_DATA:$CONT_DATA:ro \
+			-v $NLP_RESULTS:$CONT_RESULTS \
+			-v $LOCAL_X11_PATH:$CONT_X11_PATH \
+			-v $XKEY_BIND \
+			-e DISPLAY=%DISPLAY% \
+			$DOCKER_IMAGE:$TAG $CONT_SCRIPTS/$SCRIPT.sh
+	else
+		docker run --rm -it -v $LOCAL_PYS:$CONT_PYS \
+			-v $LOCAL_SCRIPTS:$CONT_SCRIPTS \
+			-v $NLP_DATA:$CONT_DATA:ro \
+			-v $NLP_RESULTS:$CONT_RESULTS \
+			-v $LOCAL_X11_PATH:$CONT_X11_PATH \
+			-v $XKEY_BIND \
+			-e DISPLAY=%DISPLAY% \
+			$DOCKER_IMAGE:$TAG $CONT_SCRIPTS/$SCRIPT.sh
+	fi
 
 	# xhost -local:root
 fi
