@@ -10,6 +10,7 @@ RUN apt update \
     && apt install -y curl \ 
      libgtk2.0-0 \
      libxtst6 \
+     openjdk-8-jre \
      unzip
 
 # JRE-18 and JavaFX installation from OpenJDK
